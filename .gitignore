@@ -19,13 +19,16 @@ lerna-debug.log*
 
 # IDEs and editors
 /.idea
-.iml
+*.iml
 .project
 .classpath
 .c9/
 *.launch
 .settings/
 *.sublime-workspace
+
+# Sensitive data
+.env
 
 # IDE - VSCode
 .vscode/*
