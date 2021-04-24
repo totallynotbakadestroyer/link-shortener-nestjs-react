@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { User } from '../../users/schemas/user.schema';
-import * as mongoose from 'mongoose';
 
 export type LinkDocuemnt = Link & Document;
 
