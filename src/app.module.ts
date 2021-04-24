@@ -9,6 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
 import { AuthController } from './auth/auth.controller';
+import { ShortenedLinksModule } from './shortened-links/shortened-links.module';
 
 @Module({
   imports: [
@@ -17,12 +18,14 @@ import { AuthController } from './auth/auth.controller';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         uri: configService.get<string>('mongoUri'),
+        useCreateIndex: true,
       }),
       inject: [ConfigService],
     }),
     LinksModule,
     UsersModule,
     AuthModule,
+    ShortenedLinksModule,
   ],
   controllers: [AppController, UsersController, AuthController],
   providers: [AppService],

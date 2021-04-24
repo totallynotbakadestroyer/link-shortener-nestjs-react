@@ -17,7 +17,7 @@ export class LinksService {
   ) {}
   async create(createLinkDto: CreateLinkDto, user?: any) {
     const { id: userId } = user;
-    const shortenedLink = `/r/${nanoid(15)}`;
+    const shortenedLink = nanoid(15);
     const createdLink = await this.linkModel.create({
       ...createLinkDto,
       creator: userId,
@@ -30,8 +30,16 @@ export class LinksService {
     return this.linkModel.find({ creator: user.id });
   }
 
+  async findOneByShortenedLink(shortenedLink: string) {
+    const foundLink = this.linkModel.findOne({ shortenedLink });
+    if (!foundLink) {
+      throw new NotFoundException('Link with provided id is not found');
+    }
+    return foundLink;
+  }
+
   async findOne(user: any, id: string) {
-    const foundPost = await this.linkModel.findById(id);
+    const foundPost = await this.linkModel.findById(id).populate('visitors');
     if (!foundPost) {
       throw new NotFoundException('Link with provided id is not found');
     }

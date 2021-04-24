@@ -5,7 +5,16 @@ import * as mongoose from 'mongoose';
 
 export type LinkDocuemnt = Link & Document;
 
-@Schema()
+@Schema({
+  toJSON: {
+    virtuals: true,
+    transform: (doc, ret) => {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.__v;
+    },
+  },
+})
 export class Link {
   @Prop({ required: true })
   to: string;
@@ -18,3 +27,10 @@ export class Link {
 }
 
 export const LinkSchema = SchemaFactory.createForClass(Link);
+
+LinkSchema.virtual('visitors', {
+  ref: 'Visitor',
+  localField: '_id',
+  foreignField: 'link',
+  justOne: false,
+});
