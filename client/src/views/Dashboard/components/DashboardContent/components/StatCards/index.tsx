@@ -4,7 +4,7 @@ import TimelineIcon from '@material-ui/icons/Timeline';
 import { ChartPie, CursorDefaultClick } from 'mdi-material-ui';
 import React from 'react';
 
-import SingleStatCard from './SingleStatCard';
+import SingleStatCard from './components/SingleStatCard';
 
 const cards = [
   {

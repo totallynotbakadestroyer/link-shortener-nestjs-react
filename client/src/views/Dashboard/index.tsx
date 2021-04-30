@@ -3,6 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import React from 'react';
 
+import DashboardContent from "./components/DashboardContent";
 import Header from './components/Header';
 import NavigationDrawer from './components/NavigationDrawer';
 
@@ -50,6 +51,7 @@ const Dashboard = (): JSX.Element => {
       />
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        <DashboardContent />
       </main>
     </Box>
   );

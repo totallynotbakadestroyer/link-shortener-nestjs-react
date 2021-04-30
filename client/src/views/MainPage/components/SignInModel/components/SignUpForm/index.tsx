@@ -1,9 +1,7 @@
 import {
-  Box,
   Button,
   Grid,
   LinearProgress,
-  Typography,
 } from '@material-ui/core';
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-material-ui';

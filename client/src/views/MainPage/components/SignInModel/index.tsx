@@ -1,17 +1,10 @@
 import {
-  AppBar,
-  Button,
   Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   Paper,
   Tab,
-  TextField,
 } from '@material-ui/core';
 import { TabContext, TabList, TabPanel } from '@material-ui/lab';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import LoginForm from './components/LoginForm';
 import SignUpForm from './components/SignUpForm';
