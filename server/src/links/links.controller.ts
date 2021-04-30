@@ -15,7 +15,7 @@ import { UpdateLinkDto } from './dto/update-link.dto';
 import { OptionalJwtAuthGuard } from '../auth/guards/anonymous-auth.guard';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
-@Controller('links')
+@Controller('api/links')
 export class LinksController {
   constructor(private readonly linksService: LinksService) {}
 
