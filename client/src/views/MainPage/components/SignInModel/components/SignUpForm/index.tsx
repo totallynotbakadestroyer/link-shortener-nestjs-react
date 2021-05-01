@@ -1,14 +1,16 @@
-import {
-  Button,
-  Grid,
-  LinearProgress,
-} from '@material-ui/core';
+import { Button, Grid, LinearProgress } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import { signUp } from 'actions/user.actions';
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-material-ui';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store';
+import { SignUpCredentials } from 'types';
 import * as Yup from 'yup';
 
 const LoginSchema = Yup.object().shape({
+  username: Yup.string().required('Username is required'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   password: Yup.string().required('Password is required'),
   passwordConfirm: Yup.string().oneOf(
@@ -17,74 +19,112 @@ const LoginSchema = Yup.object().shape({
   ),
 });
 
-const SignUpForm = (): JSX.Element => (
-  <Formik
-    initialValues={{
-      email: '',
-      password: '',
-      passwordConfirm: '',
-    }}
-    validationSchema={LoginSchema}
-    onSubmit={(values, { setSubmitting }) => {
-      setTimeout(() => {
-        setSubmitting(false);
-        alert(JSON.stringify(values, null, 2));
-      }, 500);
-    }}
-  >
-    {({ submitForm, isSubmitting }) => (
-      <Form>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Field
-              variant={'outlined'}
-              component={TextField}
-              name="email"
-              fullWidth
-              type="email"
-              label="Email"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Field
-              variant={'outlined'}
-              component={TextField}
-              type="password"
-              label="Password"
-              fullWidth
-              name="password"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Field
-              variant={'outlined'}
-              component={TextField}
-              type="password"
-              label="Password confirmation"
-              fullWidth
-              name="passwordConfirm"
-            />
-          </Grid>
-          {isSubmitting && (
+const SignUpForm = (): JSX.Element => {
+  const dispatch = useDispatch();
+  const users = useSelector((state: RootState) => state.users);
+
+  return (
+    <Formik
+      initialValues={{
+        username: '',
+        email: '',
+        password: '',
+        passwordConfirm: '',
+      }}
+      validationSchema={LoginSchema}
+      onSubmit={async (
+        values: SignUpCredentials,
+        { setSubmitting, resetForm },
+      ) => {
+        setSubmitting(true);
+        try {
+          await dispatch(signUp(values));
+          resetForm();
+        } catch (e) {
+          setSubmitting(false);
+        }
+      }}
+    >
+      {({ submitForm, isSubmitting }) => (
+        <Form>
+          <Grid container spacing={2}>
+            {users.loginError && (
+              <Grid item xs={12}>
+                <Alert severity="error">
+                  <AlertTitle>Error</AlertTitle>
+                  {users.loginError}
+                </Alert>
+              </Grid>
+            )}
+            {users.signUpSuccess && (
+              <Grid item xs={12}>
+                <Alert severity="success">
+                  <AlertTitle>Success</AlertTitle>
+                  Congrats! You have successfully created your account. You can
+                  log in now!
+                </Alert>
+              </Grid>
+            )}
             <Grid item xs={12}>
-              <LinearProgress />
+              <Field
+                variant={'outlined'}
+                component={TextField}
+                name="username"
+                fullWidth
+                label="Username"
+              />
             </Grid>
-          )}
-          <Grid item xs={12}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              disabled={isSubmitting}
-              onClick={submitForm}
-            >
-              Login
-            </Button>
+            <Grid item xs={12}>
+              <Field
+                variant={'outlined'}
+                component={TextField}
+                name="email"
+                fullWidth
+                type="email"
+                label="Email"
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Field
+                variant={'outlined'}
+                component={TextField}
+                type="password"
+                label="Password"
+                fullWidth
+                name="password"
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Field
+                variant={'outlined'}
+                component={TextField}
+                type="password"
+                label="Password confirmation"
+                fullWidth
+                name="passwordConfirm"
+              />
+            </Grid>
+            {isSubmitting && (
+              <Grid item xs={12}>
+                <LinearProgress />
+              </Grid>
+            )}
+            <Grid item xs={12}>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                disabled={isSubmitting}
+                onClick={submitForm}
+              >
+                Sign up
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-      </Form>
-    )}
-  </Formik>
-);
+        </Form>
+      )}
+    </Formik>
+  );
+};
 
 export default SignUpForm;
