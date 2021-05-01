@@ -3,9 +3,8 @@ import { Chart, PieSeries } from '@devexpress/dx-react-chart-material-ui';
 import {Box, Grid} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import {GridColDef} from "@material-ui/data-grid";
+import DataTable from 'components/DataTable';
 import React from 'react';
-
-import DataTable from '../../../../../../../../components/DataTable';
 
 const columns: GridColDef[] = [
   { field: 'name', headerName: 'Name', flex: 1 },
