@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Response } from '@nestjs/common';
 import { ShortenedLinksService } from './shortened-links.service';
 import { IpAddress } from '../decorators/ip-address.decorator';
+import { UserAgent } from '../decorators/user-agent.decorator';
 
 @Controller('r')
 export class ShortenedLinksController {
@@ -10,9 +11,10 @@ export class ShortenedLinksController {
     @Param('shortenedLink') shortenedLink: string,
     @Response() res,
     @IpAddress() ip,
+    @UserAgent() userAgent,
   ) {
     const { id, to } = await this.shortenedLinksService.redirect(shortenedLink);
-    this.shortenedLinksService.storeVisitor(id, ip);
+    this.shortenedLinksService.storeVisitor(id, ip, userAgent);
     res.redirect(to);
   }
 }

@@ -22,6 +22,15 @@ export class Visitor {
   @Prop()
   city: string;
 
+  @Prop()
+  deviceType: string;
+
+  @Prop()
+  browser: string;
+
+  @Prop()
+  os: string;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Link', required: true })
   link: Link;
 }

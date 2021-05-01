@@ -4,6 +4,7 @@ import * as geoip from 'fast-geoip';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Visitor, VisitorDocuemnt } from './schemas/visitor.schema';
+import DeviceDetector = require('device-detector-js');
 
 @Injectable()
 export class ShortenedLinksService {
@@ -16,11 +17,29 @@ export class ShortenedLinksService {
     return this.linksService.findOneByShortenedLink(shortenedLink);
   }
 
-  async storeVisitor(linkId, ip) {
-    console.log(ip);
+  async storeVisitor(linkId, ip, userAgent) {
+    const deviceDetector = new DeviceDetector();
+    const result = deviceDetector.parse(userAgent);
+    const deviceInfo = {
+      deviceType:
+        result.device && result.device.type
+          ? result.device.type
+          : 'Unknown Device',
+      browser:
+        result.client && result.client.name
+          ? result.client.name
+          : 'Unknown Browser',
+      os: result.os && result.os.name ? result.os.name : 'Unknown OS',
+    };
     const geo = await geoip.lookup(ip);
-    const country = geo ? geo.country : 'Unknown Country';
-    const city = geo ? geo.city : 'Unknown City';
-    return this.visitorModel.create({ country, city, link: linkId });
+    const geoInfo = {
+      country: geo && geo.country ? geo.country : 'Unknown Country',
+      city: geo && geo.city ? geo.city : 'Unknown City',
+    };
+    return this.visitorModel.create({
+      ...geoInfo,
+      ...deviceInfo,
+      link: linkId,
+    });
   }
 }
