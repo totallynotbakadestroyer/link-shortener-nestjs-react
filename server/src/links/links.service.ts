@@ -9,6 +9,7 @@ import { nanoid } from 'nanoid';
 import { InjectModel } from '@nestjs/mongoose';
 import { Link, LinkDocuemnt } from './schemas/link.schema';
 import { Model } from 'mongoose';
+import { generateLinksAggregationPipeline } from '../helpers';
 
 @Injectable()
 export class LinksService {
@@ -27,7 +28,8 @@ export class LinksService {
   }
 
   async findAll(user: any) {
-    return this.linkModel.find({ creator: user.id });
+    const pipeline = generateLinksAggregationPipeline(user);
+    return this.linkModel.aggregate(pipeline);
   }
 
   async findOneByShortenedLink(shortenedLink: string) {
