@@ -32,27 +32,20 @@ const SignUpForm = (): JSX.Element => {
         passwordConfirm: '',
       }}
       validationSchema={LoginSchema}
-      onSubmit={async (
-        values: SignUpCredentials,
-        { setSubmitting, resetForm },
-      ) => {
+      onSubmit={(values: SignUpCredentials, { setSubmitting, resetForm }) => {
         setSubmitting(true);
-        try {
-          await dispatch(signUp(values));
-          resetForm();
-        } catch (e) {
-          setSubmitting(false);
-        }
+        dispatch(signUp(values, resetForm));
+        setSubmitting(false);
       }}
     >
       {({ submitForm, isSubmitting }) => (
         <Form>
           <Grid container spacing={2}>
-            {users.loginError && (
+            {users.signUpError && (
               <Grid item xs={12}>
                 <Alert severity="error">
                   <AlertTitle>Error</AlertTitle>
-                  {users.loginError}
+                  {users.signUpError}
                 </Alert>
               </Grid>
             )}

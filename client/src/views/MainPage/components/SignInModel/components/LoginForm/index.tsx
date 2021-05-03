@@ -33,14 +33,10 @@ const LoginForm = (): JSX.Element => {
         password: '',
       }}
       validationSchema={LoginSchema}
-      onSubmit={async (values: LoginCredentials, { setSubmitting }) => {
+      onSubmit={(values: LoginCredentials, { setSubmitting }) => {
         setSubmitting(true);
-        try {
-          await dispatch(login(values));
-          history.push('/dashboard');
-        } catch (e) {
-          setSubmitting(false);
-        }
+        dispatch(login(values, history));
+        setSubmitting(false);
       }}
     >
       {({ submitForm, isSubmitting }) => (

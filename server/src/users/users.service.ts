@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -11,6 +11,10 @@ export class UsersService {
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
   async create(createUserDto: CreateUserDto) {
+    const exist = await this.userModel.findOne({ email: createUserDto.email });
+    if (exist) {
+      throw new ConflictException('User with such email already exists');
+    }
     const createdUser = new this.userModel(createUserDto);
     return createdUser.save();
   }
