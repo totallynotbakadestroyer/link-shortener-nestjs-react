@@ -29,7 +29,8 @@ export class LinksService {
 
   async findAll(user: any) {
     const pipeline = generateLinksAggregationPipeline(user);
-    return this.linkModel.aggregate(pipeline);
+    const result = await this.linkModel.aggregate(pipeline);
+    return result[0];
   }
 
   async findOneByShortenedLink(shortenedLink: string) {

@@ -6,23 +6,19 @@ import OSGraph from './components/OSGraph';
 
 const DeviceOSGraphs = ({
   deviceData,
-  deviceRows,
   osData,
-  osRows,
 }: {
   deviceData: any[];
-  deviceRows: any[];
   osData: any[];
-  osRows: any[];
 }): JSX.Element => (
   <Paper>
     <Box p={2}>
       <Grid spacing={2} container>
         <Grid item xs={12} md={6}>
-          <DeviceGraph rows={deviceRows} data={deviceData} />
+          <DeviceGraph data={deviceData} />
         </Grid>
         <Grid item xs={12} md={6}>
-          <OSGraph rows={osRows} data={osData} />
+          <OSGraph data={osData} />
         </Grid>
       </Grid>
     </Box>

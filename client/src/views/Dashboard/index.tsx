@@ -1,9 +1,12 @@
 import { Box } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import DashboardContent from "./components/DashboardContent";
+import { getLinks } from '../../actions/links.actions';
+import { RootState } from '../../store';
+import DashboardContent from './components/DashboardContent';
 import Header from './components/Header';
 import NavigationDrawer from './components/NavigationDrawer';
 
@@ -24,6 +27,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const Dashboard = (): JSX.Element => {
+  const dispatch = useDispatch();
+  const links = useSelector((state: RootState) => state.links);
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -33,6 +38,10 @@ const Dashboard = (): JSX.Element => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    dispatch(getLinks());
+  }, [dispatch]);
 
   const classes = useStyles();
 
@@ -51,7 +60,9 @@ const Dashboard = (): JSX.Element => {
       />
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <DashboardContent />
+        {!links.loading && !!links.linksInfo && (
+          <DashboardContent linksInfo={links.linksInfo} />
+        )}
       </main>
     </Box>
   );

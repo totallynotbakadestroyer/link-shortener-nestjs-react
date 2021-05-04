@@ -11,19 +11,19 @@ const columns: GridColDef[] = [
   { field: 'total', headerName: 'Total', flex: 1 },
 ];
 
-const OSGraph = ({ data, rows }: { data: any[]; rows: any[] }): JSX.Element => (
+const OSGraph = ({ data }: { data: any[] }): JSX.Element => (
   <Grid container>
     <Grid xs={12} md={6} item>
       <Box textAlign={'left'}>
         <Typography>Operating System</Typography>
       </Box>
       <Chart data={data}>
-        <PieSeries valueField="population" argumentField="year" />
+        <PieSeries valueField="total" argumentField="name" />
         <Animation />
       </Chart>
     </Grid>
     <Grid item xs={12} md={6}>
-        <DataTable rows={rows} columns={columns} />
+      <DataTable rows={data} columns={columns} />
     </Grid>
   </Grid>
 );

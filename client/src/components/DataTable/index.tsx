@@ -1,4 +1,4 @@
-import { makeStyles} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { Theme } from '@material-ui/core/styles';
 import { DataGrid, GridColDef, GridRowsProp } from '@material-ui/data-grid';
 import React from 'react';
@@ -25,16 +25,17 @@ const DataTable = ({
 }): JSX.Element => {
   const classes = useStyles();
   return (
-      <DataGrid
-        hideFooterRowCount
-        hideFooterSelectedRowCount
-        className={classes.tableContainer}
-        rows={rows}
-        columns={columns}
-        pagination
-        autoPageSize
-        components={{ Pagination: CustomPagination }}
-      />
+    <DataGrid
+      hideFooterRowCount
+      hideFooterSelectedRowCount
+      className={classes.tableContainer}
+      rows={rows}
+      columns={columns}
+      pagination
+      autoPageSize
+      components={{ Pagination: CustomPagination }}
+      getRowId={row => row.name}
+    />
   );
 };
 

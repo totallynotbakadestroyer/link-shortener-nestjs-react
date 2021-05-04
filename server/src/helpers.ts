@@ -174,5 +174,6 @@ export const generateLinksAggregationPipeline = (user: any) => {
         ],
       },
     },
+    { $unwind: '$total' },
   ];
 };

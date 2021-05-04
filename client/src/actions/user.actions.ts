@@ -7,7 +7,7 @@ export const login = (userCredentials: LoginCredentials, history) => {
     try {
       const data = await userService.login(userCredentials);
       dispatch({ type: 'LOGIN_SUCCESS', data });
-      history.push('/dashboard');
+      await history.push('/dashboard');
     } catch (e) {
       dispatch({ type: 'LOGIN_ERROR', data: e });
     }

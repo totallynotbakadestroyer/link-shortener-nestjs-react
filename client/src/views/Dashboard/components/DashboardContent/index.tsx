@@ -7,16 +7,6 @@ import ClicksGraph from './components/ClicksGraph';
 import DeviceOSGraphs from './components/DeviceOSGraphs';
 import StatCards from './components/StatCards';
 
-const data = [
-  { year: '1950', population: 2.525 },
-  { year: '1960', population: 3.018 },
-  { year: '1970', population: 3.682 },
-  { year: '1980', population: 4.44 },
-  { year: '1990', population: 5.31 },
-  { year: '2000', population: 6.127 },
-  { year: '2010', population: 6.93 },
-];
-
 const createData = (): any => {
   const data: any[] = [];
   for (let i = 0; i < 30; i++) {
@@ -32,25 +22,23 @@ const createData = (): any => {
 
 const rows: GridRowsProp[] = createData();
 
-const DashboardContent = (): JSX.Element => {
+const DashboardContent = ({ linksInfo }: { linksInfo: any }): JSX.Element => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} container>
-        <StatCards />
+        <StatCards total={linksInfo.total} />
       </Grid>
       <Grid xs={12} item>
-        <ClicksGraph data={data} />
+        <ClicksGraph data={linksInfo.clicksByDay} />
       </Grid>
       <Grid xs={12} item>
         <DeviceOSGraphs
-          deviceRows={rows}
-          osRows={rows}
-          deviceData={data}
-          osData={data}
+          deviceData={linksInfo.devices}
+          osData={linksInfo.os}
         />
       </Grid>
       <Grid xs={12} item>
-        <BrowsersGraph data={data} rows={rows} />
+        <BrowsersGraph data={linksInfo.browsers} />
       </Grid>
     </Grid>
   );

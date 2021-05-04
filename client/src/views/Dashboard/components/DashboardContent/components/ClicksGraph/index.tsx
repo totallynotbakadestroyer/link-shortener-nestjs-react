@@ -20,7 +20,7 @@ const ClicksGraph = ({ data }: { data: any[] }): JSX.Element => {
           <ArgumentAxis />
           <ValueAxis />
 
-          <BarSeries valueField="population" argumentField="year" />
+          <BarSeries valueField="count" argumentField="date" />
           <Animation />
         </Chart>
       </Box>
