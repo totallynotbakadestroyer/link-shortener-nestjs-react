@@ -14,6 +14,7 @@ export type LinkDocuemnt = Link & Document;
       delete ret.__v;
     },
   },
+  timestamps: true,
 })
 export class Link {
   @Prop({ required: true })

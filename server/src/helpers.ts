@@ -22,6 +22,7 @@ export const generateLinksAggregationPipeline = (user: any) => {
               id: '$_id',
               shortenedLink: 1,
               to: 1,
+              createdAt: 1,
               visitorsCount: { $size: '$visitors' },
             },
           },
