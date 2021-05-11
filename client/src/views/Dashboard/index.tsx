@@ -10,6 +10,7 @@ import Header from './components/Header';
 import LinksBox from './components/LinksBox';
 import LinkSummary from './components/LinkSummary';
 import NavigationDrawer from './components/NavigationDrawer';
+import SettingsModal from './components/SettingsModal';
 import SummaryStats from './components/SummaryStats';
 
 const drawerWidth = 240;
@@ -28,8 +29,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Dashboard = ({match}: {match: any}): JSX.Element => {
+const Dashboard = ({ match }: { match: any }): JSX.Element => {
   const [open, setOpen] = useState(false);
+  const [settingOpen, setSettingOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleDrawerOpen = () => {
@@ -38,6 +40,14 @@ const Dashboard = ({match}: {match: any}): JSX.Element => {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleSettingsOpen = () => {
+    setSettingOpen(true);
+  };
+
+  const handleSettingsClose = () => {
+    setSettingOpen(false);
   };
 
   const classes = useStyles();
@@ -60,6 +70,7 @@ const Dashboard = ({match}: {match: any}): JSX.Element => {
         drawerWidth={drawerWidth}
         open={open}
         handleDrawerClose={handleDrawerClose}
+        handleSettingsOpen={handleSettingsOpen}
       />
       <main className={classes.content}>
         <div className={classes.toolbar} />
@@ -70,17 +81,18 @@ const Dashboard = ({match}: {match: any}): JSX.Element => {
             </Grid>
           )}
           <Grid item xs={linksMatch ? 10 : 12}>
-              <Switch>
-                <Route path={match.url + '/links/:id'}>
-                  <LinkSummary />
-                </Route>
-                <Route path={match.url}>
-                  <SummaryStats />
-                </Route>
-              </Switch>
+            <Switch>
+              <Route path={match.url + '/links/:id'}>
+                <LinkSummary />
+              </Route>
+              <Route path={match.url}>
+                <SummaryStats />
+              </Route>
+            </Switch>
           </Grid>
         </Grid>
       </main>
+      <SettingsModal open={settingOpen} handleClose={handleSettingsClose} />
     </Box>
   );
 };

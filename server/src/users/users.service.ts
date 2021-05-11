@@ -1,10 +1,14 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './schemas/user.schema';
+import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
-
 @Injectable()
 export class UsersService {
   constructor(
@@ -27,8 +31,24 @@ export class UsersService {
     return this.userModel.findById(id).lean();
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return this.userModel.findByIdAndUpdate(id, updateUserDto).lean();
+  async update(user: any, updateUserDto: UpdateUserDto) {
+    const foundUser = await this.userModel.findById(user.id);
+    console.log(updateUserDto);
+    if (updateUserDto.newEmail) {
+      if (updateUserDto.oldEmail === foundUser.email) {
+        foundUser.email = updateUserDto.newEmail;
+      } else {
+        throw new BadRequestException('Wrong email');
+      }
+    }
+    if (updateUserDto.newPassword) {
+      if (await bcrypt.compare(updateUserDto.oldPassword, foundUser.password)) {
+        foundUser.password = updateUserDto.newPassword;
+      } else {
+        throw new BadRequestException('Wrong password');
+      }
+    }
+    return foundUser.save();
   }
 
   remove(id: number) {

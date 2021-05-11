@@ -9,7 +9,12 @@ const signUp = async (payload: SignUpCredentials): Promise<unknown> => {
   return api.post('auth/sign-up', payload);
 };
 
+const updateUser = async (payload: any): Promise<any> => {
+  return api.patch(`/users`, payload);
+};
+
 export const userService = {
   login,
   signUp,
+  updateUser,
 };

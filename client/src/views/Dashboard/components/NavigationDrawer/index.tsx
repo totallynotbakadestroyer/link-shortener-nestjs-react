@@ -26,10 +26,12 @@ const NavigationDrawer = ({
   drawerWidth,
   open,
   handleDrawerClose,
+  handleSettingsOpen,
 }: {
   drawerWidth: number;
   open: boolean;
   handleDrawerClose: () => void;
+  handleSettingsOpen: () => void;
 }): JSX.Element => {
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -127,8 +129,7 @@ const NavigationDrawer = ({
           classes={{ gutters: clsx(classes.gutters) }}
           button
           key={'Settings'}
-          component={Link}
-          to={'/dashboard/settings'}
+          onClick={handleSettingsOpen}
         >
           <ListItemIcon>
             <SettingsIcon />
