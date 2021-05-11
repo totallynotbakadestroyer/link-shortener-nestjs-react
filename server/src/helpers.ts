@@ -183,3 +183,17 @@ export const generateLinksAggregationPipeline = (
     { $unwind: '$total' },
   ];
 };
+
+export const defaultResult = {
+  links: [],
+  devices: [],
+  os: [],
+  browsers: [],
+  total: {
+    totalAllTime: 0,
+    total30Days: 0,
+    total7Days: 0,
+    totalToday: 0,
+  },
+  clicksByDay: [],
+};

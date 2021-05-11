@@ -31,6 +31,16 @@ const LinksBox = (): JSX.Element | null => {
     return <CircularProgress />;
   }
 
+  if (links.linksInfo.links.length === 0) {
+    return (
+      <div className={classes.root}>
+        <Box p={2}>
+          <Typography>No data sorry :(</Typography>
+        </Box>
+      </div>
+    );
+  }
+
   return (
     <div className={classes.root}>
       <List>

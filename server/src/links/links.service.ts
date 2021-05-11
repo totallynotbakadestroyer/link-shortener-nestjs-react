@@ -9,7 +9,7 @@ import { nanoid } from 'nanoid';
 import { InjectModel } from '@nestjs/mongoose';
 import { Link, LinkDocuemnt } from './schemas/link.schema';
 import { Model } from 'mongoose';
-import { generateLinksAggregationPipeline } from '../helpers';
+import { defaultResult, generateLinksAggregationPipeline } from '../helpers';
 
 @Injectable()
 export class LinksService {
@@ -30,6 +30,7 @@ export class LinksService {
   async findAll(user: any) {
     const pipeline = generateLinksAggregationPipeline(user);
     const result = await this.linkModel.aggregate(pipeline);
+    if (!result[0]) return defaultResult;
     return result[0];
   }
 

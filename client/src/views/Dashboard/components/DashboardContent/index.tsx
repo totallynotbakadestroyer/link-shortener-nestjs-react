@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Box, Grid, Typography } from '@material-ui/core';
 import React from 'react';
 
 import BrowsersGraph from './components/BrowsersGraph';
@@ -21,15 +21,30 @@ const DashboardContent = ({
       <Grid item xs={12} container>
         <StatCards total={linksInfo.total} />
       </Grid>
-      <Grid xs={12} item>
-        <ClicksGraph data={linksInfo.clicksByDay} />
-      </Grid>
-      <Grid xs={12} item>
-        <DeviceOSGraphs deviceData={linksInfo.devices} osData={linksInfo.os} />
-      </Grid>
-      <Grid xs={12} item>
-        <BrowsersGraph data={linksInfo.browsers} />
-      </Grid>
+      {linksInfo.total.totalAllTime === 0 ? (
+        <Grid xs={12} item>
+          <Box>
+            <Typography>
+              Graphs will be avaiable after someone visit your link
+            </Typography>
+          </Box>
+        </Grid>
+      ) : (
+        <div>
+          <Grid xs={12} item>
+            <ClicksGraph data={linksInfo.clicksByDay} />
+          </Grid>
+          <Grid xs={12} item>
+            <DeviceOSGraphs
+              deviceData={linksInfo.devices}
+              osData={linksInfo.os}
+            />
+          </Grid>
+          <Grid xs={12} item>
+            <BrowsersGraph data={linksInfo.browsers} />
+          </Grid>
+        </div>
+      )}
     </Grid>
   );
 };
