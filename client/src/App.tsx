@@ -11,8 +11,7 @@ const App = (): JSX.Element => {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <Route path={'/dashboard'}>
-            <Dashboard />
+          <Route path={'/dashboard'} component={Dashboard}>
           </Route>
           <Route path={'/'}>
             <MainPage />

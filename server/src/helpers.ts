@@ -1,9 +1,14 @@
 import * as mongoose from 'mongoose';
 
-export const generateLinksAggregationPipeline = (user: any) => {
+export const generateLinksAggregationPipeline = (
+  user: any,
+  id: string | number | null = null,
+) => {
+  const match: any = { creator: mongoose.Types.ObjectId(user.id) };
+  if (id) match._id = mongoose.Types.ObjectId(id);
   return [
     {
-      $match: { creator: mongoose.Types.ObjectId(user.id) },
+      $match: match,
     },
     {
       $lookup: {

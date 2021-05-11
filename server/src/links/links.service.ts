@@ -49,7 +49,9 @@ export class LinksService {
     if (foundPost.creator.toString() !== user.id) {
       throw new ForbiddenException();
     }
-    return foundPost;
+    const pipeline = generateLinksAggregationPipeline(user, id);
+    const result = await this.linkModel.aggregate(pipeline);
+    return result[0];
   }
 
   async update(user: any, id: string, updateLinkDto: UpdateLinkDto) {

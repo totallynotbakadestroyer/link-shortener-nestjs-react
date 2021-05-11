@@ -1,4 +1,4 @@
-import {linksService} from "../services/links.service";
+import { linksService } from '../services/links.service';
 
 export const getLinks = () => {
   return async dispatch => {

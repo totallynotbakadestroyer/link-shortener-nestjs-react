@@ -1,10 +1,12 @@
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import {
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@material-ui/core';
 import {
   createStyles,
   makeStyles,
@@ -18,6 +20,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import SettingsIcon from '@material-ui/icons/Settings';
 import clsx from 'clsx';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const NavigationDrawer = ({
   drawerWidth,
@@ -100,6 +103,8 @@ const NavigationDrawer = ({
           classes={{ gutters: clsx(classes.gutters) }}
           button
           key={'Dashboard'}
+          component={Link}
+          to={'/dashboard'}
         >
           <ListItemIcon>
             <DashboardIcon />
@@ -110,6 +115,8 @@ const NavigationDrawer = ({
           classes={{ gutters: clsx(classes.gutters) }}
           button
           key={'Links'}
+          component={Link}
+          to={'/dashboard/links'}
         >
           <ListItemIcon>
             <LinkIcon />
@@ -120,6 +127,8 @@ const NavigationDrawer = ({
           classes={{ gutters: clsx(classes.gutters) }}
           button
           key={'Settings'}
+          component={Link}
+          to={'/dashboard/settings'}
         >
           <ListItemIcon>
             <SettingsIcon />

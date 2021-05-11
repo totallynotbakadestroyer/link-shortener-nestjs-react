@@ -7,7 +7,6 @@ import React from 'react';
 import SingleStatCard from './components/SingleStatCard';
 
 const StatCards = ({ total }: { total: any }): JSX.Element => {
-  console.log(total)
   const cards = [
     {
       count: total.totalAllTime,

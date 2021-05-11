@@ -1,5 +1,5 @@
 export const linksReducer = (
-  state = { loading: false, linksInfo: null, error: false },
+  state = { loading: true, linksInfo: null, error: false },
   action,
 ) => {
   switch (action.type) {

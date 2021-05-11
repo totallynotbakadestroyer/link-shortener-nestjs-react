@@ -1,14 +1,16 @@
-import { Box } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import { getLinks } from '../../actions/links.actions';
-import { RootState } from '../../store';
-import DashboardContent from './components/DashboardContent';
 import Header from './components/Header';
+import LinksBox from './components/LinksBox';
+import LinkSummary from './components/LinkSummary';
 import NavigationDrawer from './components/NavigationDrawer';
+import SummaryStats from './components/SummaryStats';
 
 const drawerWidth = 240;
 
@@ -26,10 +28,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Dashboard = (): JSX.Element => {
+const Dashboard = ({match}: {match: any}): JSX.Element => {
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const links = useSelector((state: RootState) => state.links);
-  const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -39,11 +40,13 @@ const Dashboard = (): JSX.Element => {
     setOpen(false);
   };
 
+  const classes = useStyles();
+
+  const linksMatch = useRouteMatch('/dashboard/links');
+
   useEffect(() => {
     dispatch(getLinks());
   }, [dispatch]);
-
-  const classes = useStyles();
 
   return (
     <Box display={'flex'}>
@@ -60,9 +63,23 @@ const Dashboard = (): JSX.Element => {
       />
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {!links.loading && !!links.linksInfo && (
-          <DashboardContent linksInfo={links.linksInfo} />
-        )}
+        <Grid container spacing={2}>
+          {linksMatch && (
+            <Grid xs={2} item>
+              <LinksBox />
+            </Grid>
+          )}
+          <Grid item xs={linksMatch ? 10 : 12}>
+              <Switch>
+                <Route path={match.url + '/links/:id'}>
+                  <LinkSummary />
+                </Route>
+                <Route path={match.url}>
+                  <SummaryStats />
+                </Route>
+              </Switch>
+          </Grid>
+        </Grid>
       </main>
     </Box>
   );
