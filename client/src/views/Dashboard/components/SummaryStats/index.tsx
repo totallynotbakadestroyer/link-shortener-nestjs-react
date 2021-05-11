@@ -13,7 +13,9 @@ const SummaryStats = (): JSX.Element => {
   }
 
   return (
-    <DashboardContent linksInfo={links.linksInfo} loading={links.loading} />
+    <div>
+      <DashboardContent linksInfo={links.linksInfo} loading={links.loading} />
+    </div>
   );
 };
 
