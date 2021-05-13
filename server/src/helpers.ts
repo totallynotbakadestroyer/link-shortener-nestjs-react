@@ -81,7 +81,7 @@ export const generateLinksAggregationPipeline = (
           },
         ],
         total: [
-          { $unwind: '$visitors' },
+          { $unwind: { path: '$visitors', preserveNullAndEmptyArrays: true } },
           {
             $group: {
               _id: null,
@@ -89,10 +89,13 @@ export const generateLinksAggregationPipeline = (
                 $sum: {
                   $cond: [
                     {
-                      $eq: ['$visitors.createdAt', null], //FIXME: thats really awful what am i thinking should fix ASAP
+                      $gt: [
+                        '$visitors.createdAt',
+                        new Date(new Date(0).getTime()),
+                      ],
                     },
-                    0,
                     1,
+                    0,
                   ],
                 },
               },
@@ -180,7 +183,7 @@ export const generateLinksAggregationPipeline = (
         ],
       },
     },
-    { $unwind: '$total' },
+    { $unwind: { path: '$total', preserveNullAndEmptyArrays: false } },
   ];
 };
 
