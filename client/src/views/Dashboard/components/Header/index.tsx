@@ -8,7 +8,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import React, { useState } from 'react';
 
-import { linksService } from '../../../../services/links.service';
+import { linksService } from 'services/links.service';
+import { useDispatch } from 'react-redux';
+import { addCreatedLink } from 'actions/links.actions';
 
 const Header = ({
   drawerWidth,
@@ -51,6 +53,8 @@ const Header = ({
   const [link, setLink] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const dispatch = useDispatch();
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLink(event.target.value);
   };
@@ -58,9 +62,10 @@ const Header = ({
   const shortifyLink = async () => {
     setLoading(true);
     const payload = { to: link };
-    const { shortenedLink } = await linksService.createLink(payload);
-    setLink(`${window.location.host}/r/${shortenedLink}`);
+    const createdLink = await linksService.createLink(payload);
+    setLink(`${window.location.host}/r/${createdLink.shortenedLink}`);
     setLoading(false);
+    dispatch(addCreatedLink(createdLink));
   };
 
   const classes = useStyles();

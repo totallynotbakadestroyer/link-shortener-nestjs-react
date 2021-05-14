@@ -1,5 +1,9 @@
 export const linksReducer = (
-  state = { loading: true, linksInfo: null, error: false },
+  state: { loading: boolean; linksInfo: any; error: boolean } = {
+    loading: true,
+    linksInfo: null,
+    error: false,
+  },
   action,
 ) => {
   switch (action.type) {
@@ -19,6 +23,15 @@ export const linksReducer = (
         ...state,
         loading: false,
         error: true,
+      };
+    case 'LINK_ADD':
+      console.log(action.data);
+      return {
+        ...state,
+        linksInfo: {
+          ...state.linksInfo,
+          links: [...state.linksInfo.links, action.data],
+        },
       };
     default:
       return { ...state };

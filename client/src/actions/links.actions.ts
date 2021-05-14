@@ -11,3 +11,8 @@ export const getLinks = () => {
     }
   };
 };
+
+export const addCreatedLink = link => {
+  console.log(link);
+  return { type: 'LINK_ADD', data: { ...link, visitorsCount: 0 } };
+};
