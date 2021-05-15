@@ -17,8 +17,12 @@ import { RootState } from 'store';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
-    maxHeight: 300,
+    maxHeight: '85vh',
+    overflowY: 'scroll',
     backgroundColor: theme.palette.background.paper,
+    [theme.breakpoints.down('md')]: {
+      maxHeight: 200,
+    },
   },
 }));
 

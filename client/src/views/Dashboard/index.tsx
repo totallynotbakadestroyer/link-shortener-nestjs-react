@@ -1,5 +1,4 @@
-import { Box, Grid } from '@material-ui/core';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { Box, CssBaseline, Grid } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -76,11 +75,11 @@ const Dashboard = ({ match }: { match: any }): JSX.Element => {
         <div className={classes.toolbar} />
         <Grid container spacing={2}>
           {linksMatch && (
-            <Grid xs={2} item>
+            <Grid lg={2} xs={12} item>
               <LinksBox />
             </Grid>
           )}
-          <Grid item xs={linksMatch ? 10 : 12}>
+          <Grid item xs={12} lg={linksMatch ? 10 : 12}>
             <Switch>
               <Route path={match.url + '/links/:id'}>
                 <LinkSummary />

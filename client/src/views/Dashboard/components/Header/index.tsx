@@ -1,16 +1,23 @@
-import { Box, Button, LinearProgress, TextField } from '@material-ui/core';
-import AppBar from '@material-ui/core/AppBar';
-import IconButton from '@material-ui/core/IconButton';
+import {
+  AppBar,
+  Box,
+  Button,
+  Hidden,
+  IconButton,
+  InputAdornment,
+  LinearProgress,
+  TextField,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
 import MenuIcon from '@material-ui/icons/Menu';
+import { addCreatedLink } from 'actions/links.actions';
 import clsx from 'clsx';
 import React, { useState } from 'react';
-
-import { linksService } from 'services/links.service';
 import { useDispatch } from 'react-redux';
-import { addCreatedLink } from 'actions/links.actions';
+import { linksService } from 'services/links.service';
 
 const Header = ({
   drawerWidth,
@@ -89,26 +96,51 @@ const Header = ({
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" noWrap>
-          Dashboard
-        </Typography>
-        <Box flexGrow={1} ml={4} mr={2} alignItems={'center'}>
+        <Hidden mdDown>
+          <Box mr={4}>
+            <Typography variant="h6" noWrap>
+              Dashboard
+            </Typography>
+          </Box>
+        </Hidden>
+        <Box flexGrow={1} mr={2} alignItems={'center'}>
           <div>
             <TextField
               disabled={loading}
               onChange={handleChange}
               value={link}
-              label={'Link you want short'}
+              label={'Link to shortify'}
               size={'small'}
               fullWidth
               variant={'outlined'}
+              InputProps={{
+                endAdornment: (
+                  <div>
+                    {link && (
+                      <Hidden smUp>
+                        <InputAdornment position="end">
+                          <IconButton color={'secondary'}>
+                            <AddIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      </Hidden>
+                    )}
+                  </div>
+                ),
+              }}
             />
             {loading && <LinearProgress />}
           </div>
         </Box>
-        <Button onClick={shortifyLink} disabled={loading} variant={'contained'}>
-          Create new link
-        </Button>
+        <Hidden xsDown>
+          <Button
+            onClick={shortifyLink}
+            disabled={loading}
+            variant={'contained'}
+          >
+            Create new link
+          </Button>
+        </Hidden>
       </Toolbar>
     </AppBar>
   );
