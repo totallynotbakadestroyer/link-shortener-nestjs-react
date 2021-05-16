@@ -63,7 +63,7 @@ const LinksBox = (): JSX.Element | null => {
               <Box width={'100%'} mt={1} display={'flex'}>
                 <Box flexGrow={1} width={'60%'}>
                   <Typography noWrap variant={'body2'}>
-                    {window.location.host}/{link.shortenedLink}
+                    {window.location.host}/r/{link.shortenedLink}
                   </Typography>
                 </Box>
                 <Box display={'flex'} alignContent={'center'} flexGrow={1}>

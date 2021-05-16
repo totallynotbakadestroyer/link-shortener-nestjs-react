@@ -1,9 +1,29 @@
-import { Box, Button, Container, Typography } from '@material-ui/core';
+import {AppBar, Box, Button, Toolbar, Typography} from '@material-ui/core';
 import React, { useState } from 'react';
 
 import SignInModel from '../SignInModel';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      backgroundColor: theme.palette.background.paper,
+      color: theme.palette.text.primary,
+    },
+    toolbar: {
+      textAlign: 'left',
+      flexDirection: 'row',
+      [theme.breakpoints.only('xs')]: {
+        textAlign: 'center',
+        flexDirection: 'column'
+      },
+    }
+  }),
+);
 
 const Header = (): JSX.Element => {
+  const classes = useStyles();
+
   const handleOpenLogin = () => {
     setTab('login');
     setOpen(true);
@@ -22,37 +42,42 @@ const Header = (): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
-    <React.Fragment>
-      <Box py={2}>
-        <Container>
-          <Box alignItems={'center'} display={'flex'}>
-            <Box flexGrow={1}>
-              <div>
-                <Typography align={'left'} variant={'h4'}>
-                  Shorterino
-                </Typography>
-              </div>
+    <AppBar position={'static'} elevation={0} className={classes.root}>
+      <Toolbar>
+          <Box
+            justifyContent={'center'}
+            alignItems={'center'}
+            display={'flex'}
+            flexWrap={'wrap'}
+            width={'100%'}
+            className={classes.toolbar}
+          >
+            <Box flex={1} flexGrow={1}>
+              <Typography variant={'h4'}>Shorterino</Typography>
             </Box>
-            <Box display={'flex'}>
+            <Box my={1} display={'flex'}>
               <Box mr={2}>
                 <Button onClick={handleOpenLogin}>Login</Button>
               </Box>
               <Box>
-                <Button onClick={handleOpenSignUp} color={'primary'} variant={'contained'}>
+                <Button
+                  onClick={handleOpenSignUp}
+                  color={'primary'}
+                  variant={'contained'}
+                >
                   Sign up
                 </Button>
               </Box>
             </Box>
           </Box>
-        </Container>
-      </Box>
+      </Toolbar>
       <SignInModel
         setTab={setTab}
         tab={tab}
         open={open}
         handleClose={handleClose}
       />
-    </React.Fragment>
+    </AppBar>
   );
 };
 

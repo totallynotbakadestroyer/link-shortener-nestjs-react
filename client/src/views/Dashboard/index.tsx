@@ -1,4 +1,4 @@
-import { Box, CssBaseline, Grid } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -59,7 +59,6 @@ const Dashboard = ({ match }: { match: any }): JSX.Element => {
 
   return (
     <Box display={'flex'}>
-      <CssBaseline />
       <Header
         drawerWidth={drawerWidth}
         open={open}
