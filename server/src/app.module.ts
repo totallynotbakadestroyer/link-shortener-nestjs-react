@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { LinksModule } from './links/links.module';
 import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
@@ -10,6 +8,8 @@ import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
 import { AuthController } from './auth/auth.controller';
 import { ShortenedLinksModule } from './shortened-links/shortened-links.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -26,8 +26,12 @@ import { ShortenedLinksModule } from './shortened-links/shortened-links.module';
     UsersModule,
     AuthModule,
     ShortenedLinksModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, 'public'),
+      serveRoot: '/',
+      exclude: ['/api*', '/r*'],
+    }),
   ],
-  controllers: [AppController, UsersController, AuthController],
-  providers: [AppService],
+  controllers: [UsersController, AuthController],
 })
 export class AppModule {}

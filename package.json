@@ -12,6 +12,8 @@
     "server"
   ],
   "scripts": {
+    "start": "node dist/main.js",
+    "build": "npm run build --prefix server && npm run build --prefix client",
     "server:dev": "npm run start:dev --prefix server",
     "server": "npm run start --prefix server",
     "client": "npm run start --prefix client",
