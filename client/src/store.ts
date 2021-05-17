@@ -3,11 +3,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
 import { linksReducer } from './reducers/links.reducer';
+import { settingsReducer } from './reducers/settings.reducer';
 import { userReducer } from './reducers/user.reducer';
 
 export interface RootState {
   users: UsersReducer;
   links: LinksReducer;
+  settings: SettingsReducer;
 }
 
 interface UsersReducer {
@@ -23,7 +25,15 @@ interface LinksReducer {
   error: boolean;
 }
 
-const reducer = combineReducers({ users: userReducer, links: linksReducer });
+interface SettingsReducer {
+  isDark: boolean;
+}
+
+const reducer = combineReducers({
+  users: userReducer,
+  links: linksReducer,
+  settings: settingsReducer,
+});
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 

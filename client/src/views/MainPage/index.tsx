@@ -1,9 +1,9 @@
 import {Box} from '@material-ui/core';
 import React from 'react';
+import Wave from 'react-wavify';
 
 import Header from './components/Header';
 import LinkShortener from './components/LinkShortener';
-import Wave from 'react-wavify';
 
 const MainPage = (): JSX.Element => {
   return (
@@ -18,7 +18,7 @@ const MainPage = (): JSX.Element => {
         <LinkShortener />
       </Box>
       <Wave
-        fill="#f79902"
+        fill="#03A9F4"
         paused={false}
         options={{
           height: 40,

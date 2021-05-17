@@ -11,7 +11,6 @@ import {
 import LinkIcon from '@material-ui/icons/Link';
 import { ContentCopy } from 'mdi-material-ui';
 import React, { useState } from 'react';
-
 import { linksService } from 'services/links.service';
 
 const LinkShortener = (): JSX.Element => {
@@ -55,9 +54,9 @@ const LinkShortener = (): JSX.Element => {
                   endAdornment: (
                     <div>
                       {link && (
-                        <Hidden mdUp>
+                        <Hidden smUp>
                           <InputAdornment position="end">
-                            <IconButton onClick={shortifyLink} color={'secondary'}>
+                            <IconButton onClick={shortifyLink} color={'primary'}>
                               <LinkIcon />
                             </IconButton>
                           </InputAdornment>
@@ -69,7 +68,7 @@ const LinkShortener = (): JSX.Element => {
               />
             </Box>
             <Hidden xsDown>
-              <Button onClick={shortifyLink} disabled={loading} variant={'contained'}>
+              <Button color={'secondary'} onClick={shortifyLink} disabled={loading} variant={'contained'}>
                 Shortify
               </Button>
             </Hidden>

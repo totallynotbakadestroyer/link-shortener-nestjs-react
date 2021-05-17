@@ -134,6 +134,7 @@ const Header = ({
         </Box>
         <Hidden xsDown>
           <Button
+            color={'secondary'}
             onClick={shortifyLink}
             disabled={loading}
             variant={'contained'}
