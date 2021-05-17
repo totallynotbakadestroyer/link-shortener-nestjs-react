@@ -6,6 +6,7 @@ import {
   IconButton,
   InputAdornment,
   TextField,
+  Tooltip,
   Typography,
 } from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
@@ -56,7 +57,10 @@ const LinkShortener = (): JSX.Element => {
                       {link && (
                         <Hidden smUp>
                           <InputAdornment position="end">
-                            <IconButton onClick={shortifyLink} color={'primary'}>
+                            <IconButton
+                              onClick={shortifyLink}
+                              color={'primary'}
+                            >
                               <LinkIcon />
                             </IconButton>
                           </InputAdornment>
@@ -68,7 +72,12 @@ const LinkShortener = (): JSX.Element => {
               />
             </Box>
             <Hidden xsDown>
-              <Button color={'secondary'} onClick={shortifyLink} disabled={loading} variant={'contained'}>
+              <Button
+                color={'secondary'}
+                onClick={shortifyLink}
+                disabled={loading}
+                variant={'contained'}
+              >
                 Shortify
               </Button>
             </Hidden>
@@ -84,7 +93,6 @@ const LinkShortener = (): JSX.Element => {
             >
               <Box width={'100%'} pl={2} pr={6}>
                 <Typography variant={'subtitle2'} noWrap>
-
                   {result}
                 </Typography>
               </Box>
@@ -94,9 +102,13 @@ const LinkShortener = (): JSX.Element => {
                 top={'50%'}
                 style={{ transform: 'translateY(-50%)' }}
               >
-                <IconButton>
-                  <ContentCopy />
-                </IconButton>
+                <Tooltip title={'Copy to clipboard'}>
+                  <IconButton
+                    onClick={() => navigator.clipboard.writeText(result)}
+                  >
+                    <ContentCopy />
+                  </IconButton>
+                </Tooltip>
               </Box>
             </Box>
           )}
