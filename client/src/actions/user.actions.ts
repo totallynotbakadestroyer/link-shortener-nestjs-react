@@ -26,3 +26,10 @@ export const signUp = (userCredentials: SignUpCredentials, resetForm) => {
     }
   };
 };
+
+export const logOut = history => {
+  return async dispatch => {
+    await history.push('/');
+    dispatch({ type: 'LOG_OUT' });
+  };
+};
