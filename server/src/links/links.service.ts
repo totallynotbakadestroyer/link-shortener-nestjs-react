@@ -18,7 +18,7 @@ export class LinksService {
   ) {}
   async create(createLinkDto: CreateLinkDto, user?: any) {
     const { id: userId } = user;
-    const shortenedLink = nanoid(15);
+    const shortenedLink = nanoid(9);
     const createdLink = await this.linkModel.create({
       ...createLinkDto,
       creator: userId,
