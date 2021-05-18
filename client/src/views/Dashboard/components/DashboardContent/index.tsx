@@ -30,7 +30,7 @@ const DashboardContent = ({
           </Box>
         </Grid>
       ) : (
-        <div>
+        <React.Fragment>
           <Grid xs={12} item>
             <ClicksGraph data={linksInfo.clicksByDay} />
           </Grid>
@@ -43,7 +43,7 @@ const DashboardContent = ({
           <Grid xs={12} item>
             <BrowsersGraph data={linksInfo.browsers} />
           </Grid>
-        </div>
+        </React.Fragment>
       )}
     </Grid>
   );
