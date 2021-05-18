@@ -180,6 +180,11 @@ export const generateLinksAggregationPipeline = (
               count: 1,
             },
           },
+          {
+            $sort: {
+              date: 1,
+            },
+          },
         ],
       },
     },
